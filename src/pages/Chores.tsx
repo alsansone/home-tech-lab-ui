@@ -1,34 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Chore } from "../types/chore";
-import { Link } from "react-router-dom";
-
-const mockChores: Chore[] = [
-  {
-    id: "1",
-    title: "Do the dishes",
-    assignedTo: "me",
-    completed: false,
-  },
-  {
-    id: "2",
-    title: "Vacuum living room",
-    assignedTo: "partner",
-    completed: true,
-  },
-];
 
 export default function Chores() {
-  const [chores, setChores] = useState<Chore[]>(mockChores);
+  const [chores, setChores] = useState<Chore[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("http://localhost:4000/chores")
+      .then((res) => res.json())
+      .then((data) => {
+        setChores(data);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="p-10 text-center text-gray-500">Loading chores...</div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 py-10 px-4">
-      <Link
-        to="/"
-        className="inline-block mb-6 text-indigo-600 hover:text-indigo-800 font-medium"
-      >
-        ← Back to Dashboard
-      </Link>
       <div className="max-w-2xl mx-auto bg-white p-6 rounded-2xl shadow-lg">
+        <div className="mb-6">
+          <a
+            href="/"
+            className="text-indigo-500 hover:text-indigo-700 text-sm font-medium"
+          >
+            ← Back to Dashboard
+          </a>
+        </div>
         <h1 className="text-3xl font-bold mb-6 text-center text-indigo-600">
           🧼 Chores Tracker
         </h1>
