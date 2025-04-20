@@ -13,7 +13,7 @@ export default function Chores() {
   });
 
   useEffect(() => {
-    fetch("http://localhost:4000/chores")
+    fetch("/api/chores")
       .then((res) => res.json())
       .then((data) => {
         setChores(data);
@@ -33,9 +33,7 @@ export default function Chores() {
     e.preventDefault();
     if (!form.title.trim()) return;
 
-    console.log("Submitting form:", form);
-
-    const res = await fetch("http://localhost:4000/chores", {
+    const res = await fetch("/api/chores", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...form, completed: false }),
