@@ -7,7 +7,12 @@ const projects = [
     path: "/chores",
     emoji: "🧼",
   },
-  // Add more projects here
+  {
+    name: "Retro Game",
+    description: "Play a retro game",
+    path: "/retro-game",
+    emoji: "🎮",
+  },
 ];
 
 export default function Home() {
